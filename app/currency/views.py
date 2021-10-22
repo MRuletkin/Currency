@@ -1,4 +1,4 @@
-from currency.models import Rate, ContactUs
+from currency.models import ContactUs, Rate
 
 from django.http.response import HttpResponse
 
@@ -17,10 +17,10 @@ def rate_list(request):
 
 def contact_us(request):
     results = []
-    obj = ContactUs.objects.all()
+    objects = ContactUs.objects.all()
 
-    for _ in obj:
+    for object_ in objects:
         results.append(
-            f'ID: {_.id}, sale: {_.email_from}, buy: {_.subject}, created: {_.message}<br>')
+            f'ID: {object_.id}, email_from: {object_.email_from}, subject: {object_.subject}, message: {object_.message}<br>')
 
     return HttpResponse(str(results))
