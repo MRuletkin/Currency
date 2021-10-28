@@ -1,12 +1,15 @@
-!DOCTYPE html>
-<html>
-<head>
-    <title> Page Title</title>
-</head>
-<body>
-{% for rate in rates %}
-{{ rate }} <br>}
-{% endfor %}
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Table{% endblock title %}
+
+{% block content %}
+<table border="1">
+    {% for rate in rates %}
+    <tr>
+        <td>Id: {{ rate.id }}</td>
+        <td>Sale: {{ rate.sale }}</td>
+        <td>Buy: {{ rate.buy }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}
