@@ -1,6 +1,8 @@
 from currency.views import (
-    contact_us, rate_list,
-    source_list, rate_create, source_create, source_update, source_delete, source_details
+    contact_us, rate_create,
+    rate_list, source_create,
+    source_delete, source_details,
+    source_list, source_update
 )
 
 from django.contrib import admin
