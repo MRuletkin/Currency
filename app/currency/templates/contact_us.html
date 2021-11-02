@@ -4,13 +4,21 @@
 
 {% block content %}
 <table border="=1">
+    <tr>
+        <th>Id</th>
+        <th>Email_from</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Created</th>
+    </tr>>
     {% for object in contact_us %}
     <tr>
-        <td>Id: {{ object.id }}</td>
-        <td>email_from: {{ object.email_from }}</td>
-        <td>subject: {{ object.subject }}</td>
-        <td>message: {{ object.message }}</td>
-     </tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.email_from }}</td>
+        <td>{{ object.subject }}</td>
+        <td>{{ object.message }}</td>
+        <td>{{ object.created }}</td>
+    </tr>
     {% endfor %}
 </table>
 {% endblock content %}

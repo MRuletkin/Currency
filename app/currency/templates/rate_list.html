@@ -3,12 +3,24 @@
 {% block title %}Table{% endblock title %}
 
 {% block content %}
+<p>
+    <a href="/rate/create/">Rate Create</a>
+</p>
 <table border="1">
+    <tr>
+        <th>Id</th>>
+        <th>Sale</th>
+        <th>Buy</th>
+        <th>Created</th>
+        <th>Source</th>
+    </tr>
     {% for rate in rates %}
     <tr>
-        <td>Id: {{ rate.id }}</td>
-        <td>Sale: {{ rate.sale }}</td>
-        <td>Buy: {{ rate.buy }}</td>
+        <td>{{ rate.id }}</td>
+        <td>{{ rate.sale }}</td>
+        <td>{{ rate.buy }}</td>
+        <td>{{ rate.created }}</td>
+        <td>{{ rate.source }}</td>
     </tr>
     {% endfor %}
 </table>
