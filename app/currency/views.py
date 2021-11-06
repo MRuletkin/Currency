@@ -1,104 +1,144 @@
 from currency.forms import RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
 
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 
-def rate_list(request):
-
-    rates = Rate.objects.all()
-    context = {
-        'rates': rates,
-    }
-    return render(request, 'rate_list.html', context)
+class RateListView(ListView):
+    queryset = Rate.objects.all()
 
 
-def rate_create(request):
-    if request.GET:
-        form = RateForm(request.GET)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/rate/list')
-    else:
-        form = RateForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'rate_create.html', context)
+class RateCreateView(CreateView):
+    form_class = RateForm
+    success_url = reverse_lazy('currency:rate-list')
+    template_name = 'currency/rate_create.html'
 
 
-def contact_us(request):
-
-    objects = ContactUs.objects.all()
-    context = {
-        'contact_us': objects,
-    }
-    return render(request, 'contact_us.html', context)
+class RateUpdateView(UpdateView):
+    form_class = RateForm
+    model = Rate
+    success_url = reverse_lazy('currency:rate-list')
+    template_name = 'currency/rate_update.html'
 
 
-def source_list(request):
-
-    objects = Source.objects.all()
-    context = {
-        'source_list': objects,
-    }
-    return render(request, 'source_list.html', context)
+class RateDetailsView(DetailView):
+    model = Rate
 
 
-def source_create(request):
-    if request.method == 'POST':
-        form = SourceForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/source/list')
-    else:
-        form = SourceForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'source_create.html', context)
+class RateDeleteView(DeleteView):
+    model = Rate
+    template_name = 'currency/rate_delete.html'
+    success_url = reverse_lazy('currency:rate-list')
 
 
-def source_update(request, pk):
-
-    instance = get_object_or_404(Source, id=pk)
-
-    if request.method == 'POST':
-        form = SourceForm(request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/source/list')
-    else:
-        form = SourceForm(instance=instance)
-
-    context = {
-        'form': form
-    }
-    return render(request, 'source_update.html', context)
+class ContactusListView(ListView):
+    queryset = ContactUs.objects.all()
 
 
-def source_delete(request, pk):
-
-    instance = get_object_or_404(Source, id=pk)
-
-    if request.method == 'GET':
-        context = {
-            'source_list': instance,
-        }
-        return render(request, 'source_delete.html', context)
-    else:
-        instance.delete()
-        return HttpResponseRedirect('/source/list')
+class SourceListView(ListView):
+    queryset = Source.objects.all()
 
 
-def source_details(request, pk):
+class SourceCreateView(CreateView):
+    form_class = SourceForm
+    success_url = reverse_lazy('currency:source-list')
+    template_name = 'currency/source_create.html'
 
-    instance = get_object_or_404(Source, id=pk)
 
-    context = {
-        'object': instance,
-    }
-    return render(request, 'source_details.html', context)
+class SourceUpdateView(UpdateView):
+    form_class = SourceForm
+    model = Source
+    success_url = reverse_lazy('currency:source-list')
+    template_name = 'currency/source_update.html'
+
+
+class SourceDetailsView(DetailView):
+    model = Source
+
+
+class SourceDeleteView(DeleteView):
+    model = Source
+    template_name = 'currency/source_delete.html'
+    success_url = reverse_lazy('currency:source-list')
+
+
+# def contact_us(request):
+#
+#     objects = ContactUs.objects.all()
+#     context = {
+#         'contact_us': objects,
+#     }
+#     return render(request, 'contactus_list.html', context)
+#
+#
+# def source_list(request):
+#
+#     objects = Source.objects.all()
+#     context = {
+#         'source_list': objects,
+#     }
+#     return render(request, 'source_list.html', context)
+#
+#
+# def source_create(request):
+#     if request.method == 'POST':
+#         form = SourceForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/source/list')
+#     else:
+#         form = SourceForm()
+#
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'source_create.html', context)
+#
+#
+# def source_update(request, pk):
+#
+#     instance = get_object_or_404(Source, id=pk)
+#
+#     if request.method == 'POST':
+#         form = SourceForm(request.POST, instance=instance)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect('/source/list')
+#     else:
+#         form = SourceForm(instance=instance)
+#
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'source_update.html', context)
+#
+#
+# def source_delete(request, pk):
+#
+#     instance = get_object_or_404(Source, id=pk)
+#
+#     if request.method == 'GET':
+#         context = {
+#             'source_list': instance,
+#         }
+#         return render(request, 'source_delete.html', context)
+#     else:
+#         instance.delete()
+#         return HttpResponseRedirect('/source/list')
+#
+#
+# def source_details(request, pk):
+#
+#     instance = get_object_or_404(Source, id=pk)
+#
+#     context = {
+#         'object': instance,
+#     }
+#     return render(request, 'source_detail.html', context)
