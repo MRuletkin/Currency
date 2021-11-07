@@ -1,3 +1,5 @@
+from currency import model_choices as mch
+
 from django.db import models
 
 
@@ -5,11 +7,20 @@ class Rate(models.Model):
     buy = models.DecimalField(max_digits=6, decimal_places=2)
     sale = models.DecimalField(max_digits=6, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
-    type = models.CharField(max_length=3)  # noqa: A003
-    source = models.CharField(max_length=25)
+    type = models.PositiveSmallIntegerField(  # noqa: A003
+        choices=mch.RateTypeChoices.choices,
+        default=mch.RateTypeChoices.USD,
+    )
+    source = models.PositiveIntegerField(
+        choices=mch.RateSourceChoices.choices,
+        default=mch.RateSourceChoices.PB,
+    )
 
 
 class ContactUs(models.Model):
+    class Meta:
+        verbose_name = 'Contact Us'
+        verbose_name_plural = 'Contact Us'
     email_from = models.EmailField(max_length=254)
     subject = models.CharField(max_length=50)
     message = models.CharField(max_length=100)

@@ -12,19 +12,21 @@
         <th>Type</th>
         <th>Sale</th>
         <th>Buy</th>
+        <th>Source</th>
         <th>Created</th>
         <th colspan="3">Options</th>
     </tr>
     {% for rate in object_list %}
     <tr>
-        <th> {{ rate.id }}</th>
-        <th> {{ rate.type }}</th>
-        <th> {{ rate.sale }}</th>
-        <th> {{ rate.buy }}</th>
-        <th> {{ rate.created }}</th>
-        <th> <a href="{% url 'currency:rate-details' rate.id %}">Details</a> </th>
-        <th> <a href="{% url 'currency:rate-update' rate.id %}">Edit</a> </th>
-        <th> <a href="{% url 'currency:rate-delete' rate.id %}">Delete</a> </th>
+        <td> {{ rate.id }}</td>
+        <td> {{ rate.get_type_display }} </td>
+        <td> {{ rate.sale }}</td>
+        <td> {{ rate.buy }}</td>
+        <td> {{ rate.get_source_display }} </td>
+        <td> {{ rate.created }}</td>
+        <td> <a href="{% url 'currency:rate-details' rate.id %}">Details</a> </td>
+        <td> <a href="{% url 'currency:rate-update' rate.id %}">Edit</a> </td>
+        <td> <a href="{% url 'currency:rate-delete' rate.id %}">Delete</a> </td>
         </tr>
     {% endfor %}
     </table>
