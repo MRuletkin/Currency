@@ -1,4 +1,4 @@
-from currency.models import ContactUs, Rate, Source
+from currency.models import ContactUs, Rate, RequestResponseLog, Source
 from currency.resources import RateResource, SourceResource
 
 from django.contrib import admin
@@ -10,9 +10,9 @@ from rangefilter.filters import DateTimeRangeFilter
 
 class ContactUsAdmin(admin.ModelAdmin):
     list_display = (
-        'subject',
-        'message',
         'created',
+        'name',
+        'subject',
     )
 
     def has_delete_permission(self, request, obj=None):
@@ -79,3 +79,14 @@ class SourceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Source, SourceAdmin)
+
+
+class RequestResponseLogAdmin(admin.ModelAdmin):
+    list_display = (
+        'path',
+        'request_method',
+        'time',
+    )
+
+
+admin.site.register(RequestResponseLog, RequestResponseLogAdmin)

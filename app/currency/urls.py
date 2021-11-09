@@ -1,4 +1,5 @@
 from currency.views import (
+    ContactUsCreateView,
     ContactusListView,
 
     RateCreateView,
@@ -27,6 +28,7 @@ urlpatterns = [
     path('rate/details/<int:pk>/', RateDetailsView.as_view(), name='rate-details'),
 
     path('contactus/list/', ContactusListView.as_view(), name='contactus-list'),
+    path('contactus/create/', ContactUsCreateView.as_view(), name='contactus-create'),
 
     path('source/list/', SourceListView.as_view(), name='source-list'),
     path('source/create/', SourceCreateView.as_view(), name='source-create'),

@@ -14,6 +14,8 @@ migrate:
 makemigrations:
 	$(manage_py) makemigrations
 
+collectstatic:
+	$(manage_py) collectstatic
 shell:
 	$(manage_py) shell_plus --print-sql
 

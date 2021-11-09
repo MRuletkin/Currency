@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'silk',
     'django_extensions',
     'debug_toolbar',
     'rangefilter',
@@ -42,7 +43,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'currency.middlewares.RequestResponseTimeMiddleware',
 ]
 
 ROOT_URLCONF = 'settings.urls'
@@ -119,6 +122,15 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587  # smtp, http: 80, https: 443
+# EMAIL_HOST_USER = 'testtestapp454545@gmail.com'
+# EMAIL_HOST_PASSWORD = 'qwerty123456qwerty'
+# DEFAULT_FROM_EMAIL = 'testtestapp454545@gmail.com'
 
 INTERNAL_IPS = [
     '127.0.0.1',
