@@ -2,6 +2,8 @@ from currency.forms import RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -23,21 +25,27 @@ class RateCreateView(CreateView):
     template_name = 'currency/rate_create.html'
 
 
-class RateUpdateView(UpdateView):
+class RateUpdateView(UserPassesTestMixin, UpdateView):
     form_class = RateForm
     model = Rate
     success_url = reverse_lazy('currency:rate-list')
     template_name = 'currency/rate_update.html'
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class RateDetailsView(DetailView):
+
+class RateDetailsView(LoginRequiredMixin, DetailView):
     model = Rate
 
 
-class RateDeleteView(DeleteView):
+class RateDeleteView(UserPassesTestMixin, DeleteView):
     model = Rate
     template_name = 'currency/rate_delete.html'
     success_url = reverse_lazy('currency:rate-list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class ContactusListView(ListView):
@@ -102,6 +110,25 @@ class SourceDeleteView(DeleteView):
     model = Source
     template_name = 'currency/source_delete.html'
     success_url = reverse_lazy('currency:source-list')
+
+
+class ProfileView(LoginRequiredMixin, UpdateView):
+    # model = get_user_model()  # User
+    queryset = get_user_model().objects.all()  # User
+    template_name = 'profile.html'
+    success_url = reverse_lazy('index')
+    fields = (
+        'first_name',
+        'last_name',
+    )
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    # def get_queryset(self):
+    #     queryset=super().get_queryset()
+    #     queryset = queryset.filter(id=self.request.user.id)
+    #     return queryset
 
 
 # def contact_us(request):

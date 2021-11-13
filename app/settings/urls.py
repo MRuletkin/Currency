@@ -8,6 +8,7 @@ from django.views.generic import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('authentication/', include('django.contrib.auth.urls')),
 
     path('__debug__/', include(debug_toolbar.urls)),
     path('silk/', include('silk.urls', namespace='silk')),
