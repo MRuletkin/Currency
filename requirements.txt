@@ -1,1 +1,14 @@
-django==3.2.7
+django
+django-debug-toolbar
+django-extensions
+ipython
+django-admin-rangefilter
+django-import-export
+django-silk
+
+# flake8
+flake8
+flake8-builtins
+flake8-import-order
+flake8-print
+flake8-breakpoint
