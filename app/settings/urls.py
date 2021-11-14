@@ -1,10 +1,18 @@
-from django.contrib import admin
-from django.urls import path
-from currency.views import rate_list, contact_us
+import debug_toolbar
 
+from django.contrib import admin
+from django.urls import include, path
+from django.views.generic import (
+    TemplateView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rate/list', rate_list),
-    path('contactus/', contact_us)
+    path('authentication/', include('django.contrib.auth.urls')),
+
+    path('__debug__/', include(debug_toolbar.urls)),
+    path('silk/', include('silk.urls', namespace='silk')),
+
+    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('currency/', include('currency.urls')),
 ]
