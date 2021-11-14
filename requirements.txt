@@ -6,7 +6,6 @@ django-admin-rangefilter
 django-import-export
 django-silk
 
-# flake8
 flake8
 flake8-builtins
 flake8-import-order
