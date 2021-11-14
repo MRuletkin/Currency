@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Table{% endblock title %}
+
+{% block content %}
+    <table border="1">
+    <tr>
+        <th colspan="8"> <a href="{% url 'currency:rate-create' %}"> Create Rate</a> </th>
+    </tr>
+    <tr>
+        <th>Id</th>>
+        <th>Type</th>
+        <th>Sale</th>
+        <th>Buy</th>
+        <th>Source</th>
+        <th>Created</th>
+
+        <th colspan="3">Options</th>
+    </tr>
+    {% for rate in object_list %}
+    <tr>
+        <td> {{ rate.id }}</td>
+        <td> {{ rate.get_type_display }} </td>
+        <td> {{ rate.sale }}</td>
+        <td> {{ rate.buy }}</td>
+        <td> {{ rate.get_source_display }} </td>
+        <td> {{ rate.created }}</td>
+
+        {% if request.user.is_authenticated %}
+            <td> <a href="{% url 'currency:rate-details' rate.id %}">Details</a> </td>
+                {% if request.user.is_superuser %}
+                    <td> <a href="{% url 'currency:rate-update' rate.id %}">Edit</a> </td>
+                    <td> <a href="{% url 'currency:rate-delete' rate.id %}">Delete</a> </td>
+                {% else %}
+                    <td> <a href="{% url 'login' %}">Login as a superuser </a> </td>
+                {% endif %}
+        {% else %}
+            <td> <a href="{% url 'login' %}">Login </a> </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}
