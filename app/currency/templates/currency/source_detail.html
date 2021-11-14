@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Source Delete{% endblock title %}
+
+{% block content %}
+<table border="1">
+    <tr>
+        <th>Id</th>>
+        <th>Source_url</th>
+        <th>Name</th>
+        <th>Created</th>
+    </tr>
+    <tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.source_url }}</td>
+        <td>{{ object.name }}</td>
+        <td>{{ object.created }}</td>
+    </tr>
+</table>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block content %}
+    Contact Us
+    <a href="{% url 'currency:contactus-list'%}">List_Contacts</a>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock content %}

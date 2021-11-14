@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Source Delete{% endblock title %}
+
+{% block content %}
+    Delete?
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+    </form>
+{% endblock content %}
