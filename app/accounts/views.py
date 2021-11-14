@@ -1,10 +1,9 @@
-from django.contrib.auth import get_user_model
-
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, RedirectView
-
 from accounts.forms import UserSignUpForm
 from accounts.models import User
+
+from django.contrib.auth import get_user_model
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, RedirectView
 
 
 class UserSignUpView(CreateView):
