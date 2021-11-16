@@ -16,7 +16,7 @@ from django.views.generic import (
 
 
 class RateListView(ListView):
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().select_related('source')
 
 
 class RateCreateView(CreateView):
