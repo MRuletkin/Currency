@@ -11,10 +11,7 @@ class Rate(models.Model):
         choices=mch.RateTypeChoices.choices,
         default=mch.RateTypeChoices.USD,
     )
-    source = models.PositiveIntegerField(
-        choices=mch.RateSourceChoices.choices,
-        default=mch.RateSourceChoices.PB,
-    )
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
 
 
 class ContactUs(models.Model):
@@ -33,6 +30,9 @@ class Source(models.Model):
     source_url = models.CharField(max_length=255)
     name = models.CharField(max_length=64)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
 
 class RequestResponseLog(models.Model):

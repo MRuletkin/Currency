@@ -23,7 +23,7 @@
         <td> {{ rate.get_type_display }} </td>
         <td> {{ rate.sale }}</td>
         <td> {{ rate.buy }}</td>
-        <td> {{ rate.get_source_display }} </td>
+        <td> {{ rate.source.name }} </td>
         <td> {{ rate.created }}</td>
 
         {% if request.user.is_authenticated %}
