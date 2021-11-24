@@ -1,20 +1,34 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-{% block title %}Source Delete{% endblock title %}
+{% block title %}Source Detail{% endblock title %}
 
 {% block content %}
-<table border="1">
-    <tr>
-        <th>Id</th>>
-        <th>Source_url</th>
-        <th>Name</th>
-        <th>Created</th>
-    </tr>
-    <tr>
-        <td>{{ object.id }}</td>
-        <td>{{ object.source_url }}</td>
-        <td>{{ object.name }}</td>
-        <td>{{ object.created }}</td>
-    </tr>
-</table>
+    <img src="{{ object.avatar_url }}" height="150" width="150">
+    <br>
+
+    <form method="post" enctype="multipart/form-data" class="bootstrap4">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>>
+                <th>Source_url</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> {{ object.name }}</td>
+                    <td> {{ object.source_url }} </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock content %}

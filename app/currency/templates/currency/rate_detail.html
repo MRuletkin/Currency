@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
 
-{% block title %}Rate Details{% endblock title %}
+{% block title %}Rate Detail{% endblock title %}
 
 {% block content %}
-    ID: {{ rate.id }}
-    Buy: {{ rate.buy }}
-    Sale: {{ rate.sale }}
-    ...
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>>
+                <th>Type</th>
+                <th>Buy</th>
+                <th>Sale</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> {{ object.id }}</td>
+                    <td> {{ object.type }} </td>
+                    <td> {{ object.buy }} </td>
+                    <td> {{ object.sale }} </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock content %}

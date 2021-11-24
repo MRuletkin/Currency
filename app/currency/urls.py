@@ -2,8 +2,6 @@ from currency.views import (
     ContactUsCreateView,
     ContactusListView,
 
-    ProfileView,
-
     RateCreateView,
     RateDeleteView,
     RateDetailsView,
@@ -31,8 +29,6 @@ urlpatterns = (
 
     path('contactus/list/', ContactusListView.as_view(), name='contactus-list'),
     path('contactus/create/', ContactUsCreateView.as_view(), name='contactus-create'),
-
-    path('profile/', ProfileView.as_view(), name='profile'),
 
     path('source/list/', SourceListView.as_view(), name='source-list'),
     path('source/create/', SourceCreateView.as_view(), name='source-create'),

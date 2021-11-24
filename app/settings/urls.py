@@ -5,6 +5,8 @@ from django.urls import include, path
 from django.views.generic import (
     TemplateView,
 )
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,3 +19,5 @@ urlpatterns = [
     path('currency/', include('currency.urls')),
     path('accounts/', include('accounts.urls'))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

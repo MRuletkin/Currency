@@ -1,13 +1,18 @@
 django
 django-debug-toolbar
 django-extensions
-ipython
 django-admin-rangefilter
 django-import-export
 django-silk
+django-storages
+django-crispy-forms
 
 flake8
 flake8-builtins
 flake8-import-order
 flake8-print
 flake8-breakpoint
+
+boto3
+ipython
+python-decouple

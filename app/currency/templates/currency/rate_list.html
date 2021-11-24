@@ -3,41 +3,73 @@
 {% block title %}Table{% endblock title %}
 
 {% block content %}
-    <table border="1">
-    <tr>
-        <th colspan="8"> <a href="{% url 'currency:rate-create' %}"> Create Rate</a> </th>
-    </tr>
-    <tr>
-        <th>Id</th>>
-        <th>Type</th>
-        <th>Sale</th>
-        <th>Buy</th>
-        <th>Source</th>
-        <th>Created</th>
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'currency:rate-create' %}">Create Rate</a>
+            <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>>
+                <th>Type</th>
+                <th>Sale</th>
+                <th>Buy</th>
+                <th>Source</th>
+                <th>Created</th>
+                <th colspan="3">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rate in object_list %}
+            <tr>
+                <td> {{ rate.id }}</td>
+                <td> {{ rate.get_type_display }} </td>
+                <td> {{ rate.sale }}</td>
+                <td> {{ rate.buy }}</td>
+                <td> {{ rate.source.name }} </td>
+                <td> {{ rate.created }}</td>
 
-        <th colspan="3">Options</th>
-    </tr>
-    {% for rate in object_list %}
-    <tr>
-        <td> {{ rate.id }}</td>
-        <td> {{ rate.get_type_display }} </td>
-        <td> {{ rate.sale }}</td>
-        <td> {{ rate.buy }}</td>
-        <td> {{ rate.source.name }} </td>
-        <td> {{ rate.created }}</td>
-
-        {% if request.user.is_authenticated %}
-            <td> <a href="{% url 'currency:rate-details' rate.id %}">Details</a> </td>
-                {% if request.user.is_superuser %}
-                    <td> <a href="{% url 'currency:rate-update' rate.id %}">Edit</a> </td>
-                    <td> <a href="{% url 'currency:rate-delete' rate.id %}">Delete</a> </td>
+                {% if request.user.is_authenticated %}
+                    <td>
+                        <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action
+                                </button>
+                                {% if request.user.is_superuser %}
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{% url 'currency:rate-details' rate.id %}">Details</a>
+                                    <a class="dropdown-item" href="{% url 'currency:rate-update' rate.id %}">Edit</a>
+                                    <a class="dropdown-item" href="{% url 'currency:rate-delete' rate.id %}">Delete</a>
+                                    </div>
+                                {% else %}
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{% url 'currency:rate-details' rate.id %}">Details</a>
+                                    </div>
+                                {% endif %}
+                        </div>
+                    </td>
                 {% else %}
-                    <td> <a href="{% url 'login' %}">Login as a superuser </a> </td>
+                    <td> <a href="{% url 'login' %}">Login </a> </td>
                 {% endif %}
-        {% else %}
-            <td> <a href="{% url 'login' %}">Login </a> </td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-    </table>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+<footer class="text-center text-lg-start bg-light text-muted">
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <div class="container-fluid text-center text-md-left">
+      <span>Get connected with us on social networks:</span>
+        <a href="instagram.com"><i class="fa fa-instagram"></i></a>
+        <a href="twitter.com"><i class="fa fa-twitter"></i></a>
+        <a href="linkedin.com"><i class="fa fa-linkedin"></i></a>
+        <a href="facebook.com"><i class="fa fa-facebook"></i></a>
+    </div>
+  </section>
+</footer>
+
 {% endblock content %}
+
