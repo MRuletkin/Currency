@@ -1,7 +1,7 @@
-import os
+# import os
 from pathlib import Path
 
-from decouple import config
+# from decouple import config
 from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +31,6 @@ INSTALLED_APPS = [
 
     'currency',
     'accounts',
-    
     'storages',
 ]
 
