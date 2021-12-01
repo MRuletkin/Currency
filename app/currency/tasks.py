@@ -241,7 +241,7 @@ def parse_obmen_dp_ua():
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     currencies_tab = soup.find(class_="currencies__tab-content")
-    currencies_sale = currencies_tab.find_all(class_="currencies__block-buy")
+    currencies_sale = currencies_tab.find_all(class_="currencies__block-sale")
     currencies_buy = currencies_tab.find_all(class_="currencies__block-buy")
 
     rates = [
