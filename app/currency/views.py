@@ -1,9 +1,8 @@
 from currency.forms import RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
+from currency.tasks import send_email_in_background
 
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -15,7 +14,7 @@ from django.views.generic import (
 
 
 class RateListView(ListView):
-    queryset = Rate.objects.all().select_related('source')
+    queryset = Rate.objects.all().order_by('-created').select_related('source')
 
 
 class RateCreateView(CreateView):
@@ -62,30 +61,33 @@ class ContactUsCreateView(CreateView):
         'body',
     )
 
-    def _send_email(self):
-        subject = 'User'
+    def form_valid(self, form):
+        redirect = super().form_valid(form)
+        subject = 'User ContactUs'
         body = f'''
             Request From: {self.object.name}
             Email to reply: {self.object.reply_to}
-            Body: {self.object.body}
             Subject: {self.object.subject}
+            Body: {self.object.body}
         '''
-        send_mail(
-            subject,
-            body,
-            settings.DEFAULT_FROM_EMAIL,
-            [settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False,
-        )
-
-    def form_valid(self, form):
-        redirect = super().form_valid(form)
-        self._send_email()
+        send_email_in_background.delay(subject, body)
+        # send_email_in_background.apply_async(args=(subject, body))
+        '''
+        00-8.59 | 9.00-19.00 | 19.01 - 23.59
+        9.00    |    send    | 9.00 next day
+        '''
+        # from datetime import datetime, timedelta
+        # eta = datetime(2021, 11, 21, 19, 00, 00)
+        # send_email_in_background.apply_async(
+        #     kwargs={'subject': subject, 'body': body},
+        #     countdown=120,
+        # eta=eta,
+        # )
         return redirect
 
 
 class SourceListView(ListView):
-    queryset = Source.objects.all()
+    queryset = Source.objects.all().order_by('-created')
 
 
 class SourceCreateView(CreateView):
@@ -114,78 +116,3 @@ class SourceDeleteView(DeleteView):
     model = Source
     template_name = 'currency/source_delete.html'
     success_url = reverse_lazy('currency:source-list')
-
-
-# def contact_us(request):
-#
-#     objects = ContactUs.objects.all()
-#     context = {
-#         'contact_us': objects,
-#     }
-#     return render(request, 'contactus_list.html', context)
-#
-#
-# def source_list(request):
-#
-#     objects = Source.objects.all()
-#     context = {
-#         'source_list': objects,
-#     }
-#     return render(request, 'source_list.html', context)
-#
-#
-# def source_create(request):
-#     if request.method == 'POST':
-#         form = SourceForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/source/list')
-#     else:
-#         form = SourceForm()
-#
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'source_create.html', context)
-#
-#
-# def source_update(request, pk):
-#
-#     instance = get_object_or_404(Source, id=pk)
-#
-#     if request.method == 'POST':
-#         form = SourceForm(request.POST, instance=instance)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('/source/list')
-#     else:
-#         form = SourceForm(instance=instance)
-#
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'source_update.html', context)
-#
-#
-# def source_delete(request, pk):
-#
-#     instance = get_object_or_404(Source, id=pk)
-#
-#     if request.method == 'GET':
-#         context = {
-#             'source_list': instance,
-#         }
-#         return render(request, 'source_delete.html', context)
-#     else:
-#         instance.delete()
-#         return HttpResponseRedirect('/source/list')
-#
-#
-# def source_details(request, pk):
-#
-#     instance = get_object_or_404(Source, id=pk)
-#
-#     context = {
-#         'object': instance,
-#     }
-#     return render(request, 'source_detail.html', context)

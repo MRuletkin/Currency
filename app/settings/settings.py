@@ -1,7 +1,9 @@
 # import os
 from pathlib import Path
 
+from celery.schedules import crontab
 # from decouple import config
+
 from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -150,5 +152,34 @@ INTERNAL_IPS = [
 
 DOMAIN = 'localhost:8000'
 HTTP_SCHEMA = 'http'
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+CELERY_BEAT_SCHEDULE = {
+    'parse_privatbank': {
+        'task': 'currency.tasks.parse_privatbank',
+        'schedule': crontab(minute='*/1')
+    },
+    'parse_monobank': {
+        'task': 'currency.tasks.parse_monobank',
+        'schedule': crontab(minute='*/5')
+    },
+    'parse_vkurse': {
+        'task': 'currency.tasks.parse_vkurse',
+        'schedule': crontab(minute='*/1')
+    },
+    'parse_alfabank': {
+        'task': 'currency.tasks.parse_alfabank',
+        'schedule': crontab(minute='*/1')
+    },
+    'parse_oschadbank': {
+        'task': 'currency.tasks.parse_oschadbank',
+        'schedule': crontab(minute='*/1')
+    },
+    'parse_parse_obmen_dp_ua': {
+        'task': 'currency.tasks.parse_obmen_dp_ua',
+        'schedule': crontab(minute='*/1')
+    },
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
