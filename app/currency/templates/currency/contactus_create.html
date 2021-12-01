@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Contact Us{% endblock title %}
 
 {% block content %}
     Contact Us
     <a href="{% url 'currency:contactus-list'%}">List_Contacts</a>
-    <form method="post">
+
+    <form method="post" class="bootstrap4">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="row">
+            <div class="col-2">
+                {{ form|crispy}}
+            </div>
+        </div>
         <button type="submit">Submit</button>
     </form>
 {% endblock content %}

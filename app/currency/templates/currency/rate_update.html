@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-{% block title %}Update Rate{% endblock title %}
+{% block title %}Rate Update{% endblock title %}
 
 {% block content %}
     Update Rate Form
 
-    <form method="post">
+    <form method="post" class="uniForm">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Submit</button>
     </form>
 {% endblock content %}
