@@ -4,7 +4,6 @@ from currency.models import ContactUs, Rate, Source
 from currency.tasks import send_email_in_background
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django_filters.views import FilterView
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -13,6 +12,8 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
+
+from django_filters.views import FilterView
 
 
 class RateListView(FilterView):

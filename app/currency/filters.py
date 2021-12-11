@@ -1,5 +1,6 @@
-import django_filters
 from currency.models import Rate
+
+import django_filters
 
 
 class RateFilter(django_filters.FilterSet):

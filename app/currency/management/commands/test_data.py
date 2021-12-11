@@ -1,12 +1,13 @@
 import random
 
-from django.core.management.base import BaseCommand
-from currency.models import Rate, Source
 from currency import model_choices as mch
+from currency.models import Rate, Source
+
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    help = 'Generate dummy data'
+    help_ = 'Generate dummy data'
 
     def handle(self, *args, **options):
         for i in range(4):
