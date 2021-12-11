@@ -1,8 +1,10 @@
+from currency.filters import RateFilter
 from currency.forms import RateForm, SourceForm
 from currency.models import ContactUs, Rate, Source
 from currency.tasks import send_email_in_background
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django_filters.views import FilterView
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -13,8 +15,19 @@ from django.views.generic import (
 )
 
 
-class RateListView(ListView):
+class RateListView(FilterView):
+    paginate_by = 10
     queryset = Rate.objects.all().order_by('-created').select_related('source')
+    filterset_class = RateFilter
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['pagination_filter'] = "&".join(
+            f"{key}={value}"
+            for key, value in self.request.GET.items()
+            if key != 'page'
+        )
+        return context
 
 
 class RateCreateView(CreateView):

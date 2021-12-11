@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rangefilter',
     'import_export',
     'crispy_forms',
+    'django_tables2',
 
     'currency',
     'accounts',
