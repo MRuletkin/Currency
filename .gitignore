@@ -4,3 +4,4 @@ env
 .idea
 app/db.sqlite3
 db.sqlite3
+app/currency/tests.py
