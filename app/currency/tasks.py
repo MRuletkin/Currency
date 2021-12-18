@@ -102,9 +102,10 @@ def parse_monobank():
 def parse_vkurse():
 
     code_name = consts.CODE_NAME_VKURSE
+    Source.objects.get_or_create(code_name=code_name, name='Vkurse')
     source = Source.objects.filter(code_name=code_name).last()
-    if source is None:
-        source = Source.objects.create(code_name=code_name, name='Vkurse')
+    # if source is None:
+    #     source = Source.objects.create(code_name=code_name, name='Vkurse')
 
     url = 'http://vkurse.dp.ua/course.json'
     response = requests.get(url)
@@ -115,7 +116,7 @@ def parse_vkurse():
         'Euro': mch.RateTypeChoices.EUR,
         'Dollar': mch.RateTypeChoices.USD,
     }
-
+    # breakpoint()
     for rate in rates.items():
         buy = to_decimal(rate[1].get('buy'))
         sale = to_decimal(rate[1].get('sale'))
