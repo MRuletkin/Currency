@@ -8,6 +8,9 @@ django-storages
 django-crispy-forms
 django-filter
 django-tables2
+djangorestframework
+djangorestframework-yaml
+djangorestframework-xml
 
 
 flake8

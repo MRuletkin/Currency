@@ -64,11 +64,11 @@ def parse_monobank():
     response = requests.get(url)
     response.raise_for_status()
     rates = response.json()
-    rates_sorted = []
+    rates_sorted = list(filter(lambda rate: "rateBuy" in rate and "rateSell" in rate and rate.get('currencyCodeB') == 980, rates))
 
-    for rate in rates:
-        if "rateBuy" in rate and "rateSell" in rate and rate.get('currencyCodeB') == 980:
-            rates_sorted.append(rate)
+    # for rate in rates:
+    #     if "rateBuy" in rate and "rateSell" in rate and rate.get('currencyCodeB') == 980:
+    #         rates_sorted.append(rate)
 
     available_currency_types = {
         978: mch.RateTypeChoices.EUR,
@@ -116,7 +116,7 @@ def parse_vkurse():
         'Euro': mch.RateTypeChoices.EUR,
         'Dollar': mch.RateTypeChoices.USD,
     }
-    # breakpoint()
+
     for rate in rates.items():
         buy = to_decimal(rate[1].get('buy'))
         sale = to_decimal(rate[1].get('sale'))
