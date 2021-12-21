@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'import_export',
     'crispy_forms',
     'django_tables2',
+    'rest_framework',
 
     'currency',
     'accounts',
@@ -140,7 +141,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_PORT = 587  # smtp, http: 80, https: 443
 # EMAIL_HOST_USER = 'testtestapp454545@gmail.com'
 # EMAIL_HOST_PASSWORD = 'qwerty123456qwerty'
-# DEFAULT_FROM_EMAIL = 'testtestapp454545@gmail.com'
+DEFAULT_FROM_EMAIL = 'testtestapp454545@gmail.com'
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
