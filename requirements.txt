@@ -24,3 +24,9 @@ ipython
 python-decouple
 celery
 beautifulsoup4
+
+#pytest
+pytest
+pytest-django
+pytest-cov
+pytest-mock

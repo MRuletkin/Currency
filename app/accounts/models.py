@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.templatetags.static import static
 
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 def avatar_upload_to(instance, filename):
     return f'avatars/{instance.id}/{filename}'
@@ -10,13 +12,8 @@ def avatar_upload_to(instance, filename):
 class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    email = models.EmailField('email address', blank=True, unique=True)
-    phone = models.CharField(
-        max_length=34,
-        default=None,
-        null=True,
-        blank=True,
-    )
+    email = models.EmailField('email address', blank=False, unique=True)
+    phone = PhoneNumberField(null=True, blank=True)
     avatar = models.FileField(
         upload_to=avatar_upload_to,
         default=None,
