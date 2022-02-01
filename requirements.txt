@@ -11,6 +11,9 @@ django-tables2
 djangorestframework
 djangorestframework-yaml
 djangorestframework-xml
+django-environ
+django-phonenumber-field
+phonenumbers
 
 
 flake8
@@ -24,6 +27,11 @@ ipython
 python-decouple
 celery
 beautifulsoup4
+pymemcache
+psycopg2-binary
+drf-yasg
+gunicorn
+flower
 
 #pytest
 pytest

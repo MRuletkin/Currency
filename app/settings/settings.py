@@ -1,20 +1,36 @@
-# import os
+import os
 from pathlib import Path
 
 from celery.schedules import crontab
-# from decouple import config
 
 from django.urls import reverse_lazy
 
+import environ
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, []),
 
-SECRET_KEY = 'django-insecure-r5e$nvvd#k^)8qv#r_z_x9eso-ux=17ahc87(90ig6icx*0l*$'
+    RABBITMQ_DEFAULT_USER=(str, 'guest'),
+    RABBITMQ_DEFAULT_PASS=(str, 'guest'),
+    RABBITMQ_DEFAULT_PORT=(str, '5672'),
+    RABBITMQ_DEFAULT_HOST=(str, 'localhost'),
 
-DEBUG = True
+    POSTGRES_HOST=(str, 'localhost'),
+    POSTGRES_PORT=(str, '5432'),
 
-ALLOWED_HOSTS = ['*']
+    MEMCACHED_HOST=(str, 'localhost'),
+    MEMCACHED_PORT=(str, '11211'),
+)
 
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+
+SECRET_KEY = env('SECRET_KEY')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,8 +96,12 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
     }
 }
 
@@ -101,6 +121,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': f'{env("MEMCACHED_HOST")}:{env("MEMCACHED_PORT")}',
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 LANGUAGE_CODE = 'en-us'
 
@@ -128,6 +156,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = '/tmp/static'
 
 # DEFAULT_FILE_STORAGE = 'app.settings.storage_backends.MediaStorage'
 MEDIA_URL = '/media/'
@@ -160,7 +189,12 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
-CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+
+CELERY_BROKER_URL = f'amqp://{env("RABBITMQ_DEFAULT_USER")}:' \
+                    f'{env("RABBITMQ_DEFAULT_PASS")}@' \
+                    f'{env("RABBITMQ_DEFAULT_HOST")}:{env("RABBITMQ_DEFAULT_PORT")}//'
+
 
 CELERY_BEAT_SCHEDULE = {
     'parse_privatbank': {
