@@ -7,7 +7,7 @@ from currency.models import ContactUs, Rate, Source
 from django_filters import rest_framework as filters
 
 from rest_framework import filters as rest_framework_filters
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 
 
 class RateViewSet(viewsets.ModelViewSet):
@@ -22,7 +22,7 @@ class RateViewSet(viewsets.ModelViewSet):
     ordering_fields = ['id', 'created', 'sale', 'buy']
 
 
-class SourceViewSet(generics.ListAPIView):
+class SourceViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Source.objects.all().order_by('-created')
     serializer_class = SourceSerializer
 

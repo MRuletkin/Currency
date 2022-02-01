@@ -1,0 +1,68 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 16,
+    "fields": {
+      "source_url": "",
+      "name": "AlfaBank",
+      "created": "2021-12-18T11:06:22.267Z",
+      "avatar": "",
+      "code_name": "alfabank"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 17,
+    "fields": {
+      "source_url": "",
+      "name": "PrivatBank",
+      "created": "2021-12-18T11:06:22.268Z",
+      "avatar": "",
+      "code_name": "privatbank"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 18,
+    "fields": {
+      "source_url": "",
+      "name": "ObmenDpUa",
+      "created": "2021-12-18T11:06:22.280Z",
+      "avatar": "",
+      "code_name": "obmendpua"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 19,
+    "fields": {
+      "source_url": "",
+      "name": "MonoBank",
+      "created": "2021-12-18T11:06:22.254Z",
+      "avatar": "",
+      "code_name": "monobank"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 20,
+    "fields": {
+      "source_url": "",
+      "name": "OschadBank",
+      "created": "2021-12-18T11:06:22.254Z",
+      "avatar": "",
+      "code_name": "oschadbank"
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 24,
+    "fields": {
+      "source_url": "",
+      "name": "Vkurse",
+      "created": "2021-12-18T12:52:00.815Z",
+      "avatar": "",
+      "code_name": "vkurse"
+    }
+  }
+]

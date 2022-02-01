@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'phonenumber_field',
 
     'silk',
     'django_extensions',
@@ -155,6 +156,10 @@ INTERNAL_IPS = [
 DOMAIN = 'localhost:8000'
 HTTP_SCHEMA = 'http'
 
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}
+
 CELERY_BROKER_URL = 'amqp://localhost'
 
 CELERY_BEAT_SCHEDULE = {
@@ -185,3 +190,5 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+PHONENUMBER_DB_FORMAT = "INTERNATIONAL"

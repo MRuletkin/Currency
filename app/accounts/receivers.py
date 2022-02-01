@@ -14,6 +14,4 @@ def user_pre_save(sender, instance, **kwargs):
 def user_pre_save_phone_field(sender, instance, **kwargs):
     if instance.phone:
         phone = instance.phone
-        for i in instance.phone:
-            if not i.isdigit():
-                instance.phone = phone.replace(i, '')
+        instance.phone = "".join(filter(lambda x: x.isdigit(), phone))
